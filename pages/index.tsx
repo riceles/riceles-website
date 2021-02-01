@@ -1,10 +1,10 @@
-import Header from '../containers/header'
+import Layout from '../containers/layout'
 // import styles from '../styles/Home.module.scss'
 
 export default function Home() {
   return (
-    <div>
-      <Header/>
-    </div>
+    <Layout>
+      <p>Conteúdo</p>
+    </Layout>
   )
 }
