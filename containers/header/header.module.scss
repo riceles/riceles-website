@@ -40,7 +40,12 @@
     li {
       width: 32px;
       height: 32px;
+      border-radius: 50%;
       cursor: pointer;
+      transition: box-shadow 400ms ease-out;
+      &.active {
+        box-shadow: 0 0 0 4px #000000bf;
+      }
     }
   }
 }
