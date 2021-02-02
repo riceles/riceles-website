@@ -43,11 +43,6 @@ export default function Header() {
                 <a>Blog</a>
               </Link>
             </li>
-            <li>
-              <Link href='/produtos'>
-                <a>Produtos</a>
-              </Link>
-            </li>
           </ul>
         </nav>
         <div className={styles.localeSwitcher}>

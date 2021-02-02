@@ -4,7 +4,7 @@ import Layout from '../containers/layout'
 export default function Home() {
   return (
     <Layout>
-      <p>Conteúdo</p>
+      <p>Conteúdo da página "home"</p>
     </Layout>
   )
 }
