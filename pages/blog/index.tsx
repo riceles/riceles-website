@@ -1,10 +1,11 @@
 import { GetServerSideProps } from 'next'
+import Link from 'next/link'
 import Layout from '../../containers/layout'
 import BlogPostCard from '../../components/blog-post-card'
 import { getBlogPostsByPage, urlFor } from '../../utils/sanity'
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const blogPosts = await getBlogPostsByPage()
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
+  const blogPosts = await getBlogPostsByPage(locale)
 
   return {
     props: {
@@ -14,29 +15,33 @@ export const getServerSideProps: GetServerSideProps = async () => {
 }
 
 export default function Blog({ blogPosts }) {
-  let content: any
-  if (blogPosts) {
-    content = (
+  let blogPostList: any
+  if (blogPosts && blogPosts.length) {
+    blogPostList = (
       <ul>
-        {blogPosts.map(({ title, description, date, coverImage }) => (
+        {blogPosts.map(({ slug, title, description, date, coverImage }) => (
           <li key={title}>
-            <BlogPostCard
-              imageSource={urlFor(coverImage).width(480).url()}
-              date={date}
-              title={title}
-              description={description}
-            />
+            <Link href={`/blog/${slug}`}>
+              <a>
+                <BlogPostCard
+                  imageSource={urlFor(coverImage).width(480).url()}
+                  date={date}
+                  title={title}
+                  description={description}
+                />
+              </a>
+            </Link>
           </li>
         ))}
       </ul>
     )
   } else {
-    content = <p>Não há postagens</p>
+    blogPostList = <p>Não há postagens</p>
   }
 
   return (
     <Layout>
-      {content}
+      {blogPostList}
     </Layout>
   )
 }
