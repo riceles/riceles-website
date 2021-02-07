@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import Layout from '../../containers/layout'
-import BlogPostCard from '../../components/blog-post-card'
-import { getBlogPostsByPage, urlFor } from '../../utils/sanity'
+import Card from '../../components/card'
+import { getBlogPostsByPage } from '../../utils/sanity'
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const blogPosts = await getBlogPostsByPage(locale)
@@ -23,8 +23,8 @@ export default function Blog({ blogPosts }) {
           <li key={title}>
             <Link href={`/blog/${slug}`}>
               <a>
-                <BlogPostCard
-                  imageSource={urlFor(coverImage).width(480).url()}
+                <Card
+                  coverImage={coverImage}
                   date={date}
                   title={title}
                   description={description}

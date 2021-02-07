@@ -1,14 +1,15 @@
 import { parseISO, format } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
-import styles from './blog-post-card.module.scss'
+import { urlFor } from '../../utils/sanity'
+import styles from './card.module.scss'
 
-export default function BlogPostCard({ imageSource, date, title, description }) {
+export default function Card({ coverImage, date, title, description }) {
   const parsedDate = parseISO(date)
 
   return (
     <div className={styles.component}>
       <figure>
-        <img src={imageSource} alt={title}/>
+        <img src={urlFor(coverImage).width(480).url()} alt={title}/>
       </figure>
       <div className={styles.body}>
         <time dateTime={date}>
