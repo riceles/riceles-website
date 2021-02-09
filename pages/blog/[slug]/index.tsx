@@ -26,6 +26,7 @@ export default function BlogPost({ blogPost }) {
         date={blogPost?.date}
         author={blogPost?.author}
         coverImage={blogPost?.coverImage}
+        content={blogPost?.content}
       />
     </Layout>
   )
