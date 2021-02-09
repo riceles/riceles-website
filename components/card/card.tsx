@@ -8,9 +8,9 @@ export default function Card({ coverImage, date, title, description }) {
 
   return (
     <div className={styles.component}>
-      <figure>
+      <div className={styles.thumbnail}>
         <img src={urlFor(coverImage).width(480).url()} alt={title}/>
-      </figure>
+      </div>
       <div className={styles.body}>
         <time dateTime={date}>
           {format(parsedDate, `d 'de' LLLL 'de' yyyy`, { locale: ptBR })}

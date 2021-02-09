@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import Layout from '../../containers/layout'
+import GridList from '../../containers/grid-list'
 import Card from '../../components/card'
 import { getBlogPostsByPage } from '../../utils/sanity'
 
@@ -18,7 +19,7 @@ export default function Blog({ blogPosts }) {
   let blogPostList: any
   if (blogPosts && blogPosts.length) {
     blogPostList = (
-      <ul>
+      <GridList>
         {blogPosts.map(({ slug, title, description, date, coverImage }) => (
           <li key={title}>
             <Link href={`/blog/${slug}`}>
@@ -33,7 +34,7 @@ export default function Blog({ blogPosts }) {
             </Link>
           </li>
         ))}
-      </ul>
+      </GridList>
     )
   } else {
     blogPostList = <p>Não há postagens</p>

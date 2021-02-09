@@ -1,9 +1,14 @@
 .component {
   width: 100%;
-  max-width: 480px;
   background: #eeeeee;
   border-radius: 12px;
   overflow: hidden;
+}
+
+.thumbnail {
+  img {
+    width: 100%;
+  }
 }
 
 .body {
