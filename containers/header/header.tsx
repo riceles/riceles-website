@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Logo from '../../icons/logo'
 import BrazilFlag from '../../icons/brazil-flag'
 import UsaFlag from '../../icons/usa-flag'
 import SpainFlag from '../../icons/spain-flag'
@@ -7,17 +8,14 @@ import styles from './header.module.scss'
 
 const localeOptions = [
   {
-    name: 'Português (Brasil)',
     code: 'pt-BR',
     icon: BrazilFlag
   },
   {
-    name: 'English (USA)',
     code: 'en-US',
     icon: UsaFlag
   },
   {
-    name: 'Español (España)',
     code: 'es-ES',
     icon: SpainFlag
   }
@@ -32,7 +30,7 @@ export default function Header() {
         <div className={styles.logo}>
           <Link href='/'>
             <a>
-              <h1>Riceles</h1>
+              <Logo/>
             </a>
           </Link>
         </div>

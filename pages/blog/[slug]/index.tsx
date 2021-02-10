@@ -18,8 +18,9 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params })
 }
 
 export default function BlogPost({ blogPost }) {
-  return (
-    <Layout>
+  let content: any
+  if (blogPost) {
+    content = (
       <Article
         title={blogPost?.title}
         description={blogPost?.description}
@@ -28,6 +29,14 @@ export default function BlogPost({ blogPost }) {
         coverImage={blogPost?.coverImage}
         content={blogPost?.content}
       />
+    )
+  } else {
+    content = <p>Nenhuma postagem encontrada</p>
+  }
+
+  return (
+    <Layout>
+      {content}
     </Layout>
   )
 }
