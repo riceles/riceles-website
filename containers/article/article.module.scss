@@ -72,6 +72,12 @@
     text-indent: 40px;
     line-height: 1.5;
   }
+  a {
+    color: #2734b3;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
   ul, ol {
     list-style-position: inside;
     li {
@@ -101,5 +107,14 @@
       font-style: italic;
       text-align: center;
     }
+  }
+  blockquote {
+    padding: 20px;
+    border-left: 4px solid #ffde6b;
+    font-style: italic;
+    text-align: justify;
+    text-indent: 20px;
+    line-height: 1.5;
+    background: #eeeeee;
   }
 }
