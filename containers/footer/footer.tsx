@@ -1,3 +1,4 @@
+import SafeLink from '../../components/safe-link'
 import styles from './footer.module.scss'
 
 const curYear = new Date().getFullYear()
@@ -7,7 +8,7 @@ export default function Footer() {
     <footer className={styles.container}>
       <div className={styles.limiter}>
         <p>Riceles Costa &copy; Copyright {curYear} | Todos os direitos reservados</p>
-        <p>Desenvolvido por <a href='https://www.linkedin.com/in/luckasnix'>Lucas Costa</a></p>
+        <p>Desenvolvido por <SafeLink href='https://www.linkedin.com/in/luckasnix'>Lucas Costa</SafeLink></p>
       </div>
     </footer>
   )
