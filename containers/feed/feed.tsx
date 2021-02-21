@@ -1,11 +1,11 @@
 import { ReactNode } from 'react'
-import styles from './grid-list.module.scss'
+import styles from './feed.module.scss'
 
-export interface GridListProps {
+export interface FeedProps {
   children: ReactNode
 }
 
-export default function GridList({ children }: GridListProps) {
+export default function Feed({ children }: FeedProps) {
   return (
     <div className={styles.container}>
       <ul className={styles.limiter}>
