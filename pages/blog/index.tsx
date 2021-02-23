@@ -1,9 +1,10 @@
+import { ReactNode } from 'react'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import Layout from '../../containers/layout'
 import Feed from '../../containers/feed'
 import Card from '../../components/card'
-import { getBlogPostsByPage } from '../../utils/sanity'
+import { getBlogPostsByPage, BlogPost } from '../../utils/sanity'
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const blogPosts = await getBlogPostsByPage(locale)
@@ -15,20 +16,24 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   }
 }
 
-export default function Blog({ blogPosts }) {
-  let blogPostList: any
+export interface BlogProps {
+  blogPosts: BlogPost[]
+}
+
+export default function Blog({ blogPosts }: BlogProps) {
+  let content: ReactNode
   if (blogPosts && blogPosts.length) {
-    blogPostList = (
+    content = (
       <Feed>
-        {blogPosts.map(({ slug, title, description, date, coverImage }) => (
-          <li key={title}>
-            <Link href={`/blog/${slug}`}>
+        {blogPosts.map(blogPost => (
+          <li key={blogPost?.title}>
+            <Link href={`/blog/${blogPost?.slug}`}>
               <a>
                 <Card
-                  coverImage={coverImage}
-                  date={date}
-                  title={title}
-                  description={description}
+                  coverImage={blogPost?.coverImage}
+                  date={blogPost?.date}
+                  title={blogPost?.title}
+                  description={blogPost?.description}
                 />
               </a>
             </Link>
@@ -37,12 +42,12 @@ export default function Blog({ blogPosts }) {
       </Feed>
     )
   } else {
-    blogPostList = <p>Não há postagens</p>
+    content = <p>Não há postagens</p>
   }
 
   return (
     <Layout>
-      {blogPostList}
+      {content}
     </Layout>
   )
 }

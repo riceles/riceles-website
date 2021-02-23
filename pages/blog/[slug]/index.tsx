@@ -1,7 +1,8 @@
+import { ReactNode } from 'react'
 import { GetServerSideProps } from 'next'
 import Layout from '../../../containers/layout'
 import Article from '../../../containers/article'
-import { getBlogPost } from '../../../utils/sanity'
+import { getBlogPost, BlogPost } from '../../../utils/sanity'
 
 export const getServerSideProps: GetServerSideProps = async ({ locale, params }) => {
   let { slug } = params
@@ -17,8 +18,12 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params })
   }
 }
 
-export default function BlogPost({ blogPost }) {
-  let content: any
+export interface PostProps {
+  blogPost: BlogPost
+}
+
+export default function Post({ blogPost }: PostProps) {
+  let content: ReactNode
   if (blogPost) {
     content = (
       <Article
