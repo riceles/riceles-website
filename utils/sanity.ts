@@ -56,7 +56,7 @@ export type GetBlogPostsByPage = (locale: string) => Promise<BlogPost[]>
 
 export const getBlogPostsByPage: GetBlogPostsByPage = async (locale) => {
   const blogPosts = await client.fetch(`
-    *[_type == 'post' && locale == $locale] {
+    *[_type == 'post' && locale == $locale] | order(date desc) {
       'slug': slug.current,
       title,
       description,
