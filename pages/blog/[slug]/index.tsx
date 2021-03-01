@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import { GetServerSideProps } from 'next'
 import Layout from '../../../containers/layout'
 import Article from '../../../containers/article'
+import Message from '../../../containers/message'
 import { getBlogPost, BlogPost } from '../../../utils/sanity'
 
 export const getServerSideProps: GetServerSideProps = async ({ locale, params }) => {
@@ -36,7 +37,12 @@ export default function Post({ blogPost }: PostProps) {
       />
     )
   } else {
-    content = <p>Nenhuma postagem encontrada</p>
+    content = (
+      <Message
+        title='Postagem não encontrada'
+        description='Não conseguimos encontrar a postagem a qual você tentou acessar'
+      />
+    )
   }
 
   return (

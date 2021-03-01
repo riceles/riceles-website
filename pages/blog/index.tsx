@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Layout from '../../containers/layout'
 import Feed from '../../containers/feed'
 import Card from '../../components/card'
+import Message from '../../containers/message'
 import { getBlogPostsByPage, BlogPost } from '../../utils/sanity'
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
@@ -21,6 +22,7 @@ export interface BlogProps {
 }
 
 export default function Blog({ blogPosts }: BlogProps) {
+  
   let content: ReactNode
   if (blogPosts && blogPosts.length) {
     content = (
@@ -42,7 +44,12 @@ export default function Blog({ blogPosts }: BlogProps) {
       </Feed>
     )
   } else {
-    content = <p>Não há postagens</p>
+    content = (
+      <Message
+        title='Postagens não encontradas'
+        description='Não conseguimos encontrar nenhuma postagem para a sua língua'
+      />
+    )
   }
 
   return (
