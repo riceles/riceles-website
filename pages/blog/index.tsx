@@ -1,11 +1,10 @@
 import { ReactNode } from 'react'
 import { GetServerSideProps } from 'next'
-import Link from 'next/link'
 import Layout from '../../containers/layout'
 import Feed from '../../containers/feed'
 import Card from '../../components/card'
 import Message from '../../containers/message'
-import { getBlogPostsByPage, BlogPost } from '../../utils/sanity'
+import { getBlogPostsByPage, BlogPost, urlFor } from '../../utils/sanity'
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const blogPosts = await getBlogPostsByPage(locale)
@@ -29,16 +28,13 @@ export default function Blog({ blogPosts }: BlogProps) {
       <Feed>
         {blogPosts.map(blogPost => (
           <li key={blogPost?.title}>
-            <Link href={`/blog/${blogPost?.slug}`}>
-              <a>
-                <Card
-                  coverImage={blogPost?.coverImage}
-                  date={blogPost?.date}
-                  title={blogPost?.title}
-                  description={blogPost?.description}
-                />
-              </a>
-            </Link>
+            <Card
+              slug={blogPost?.slug}
+              coverImageUrl={urlFor(blogPost?.coverImage).width(480).url()}
+              date={blogPost?.date}
+              title={blogPost?.title}
+              description={blogPost?.description}
+            />
           </li>
         ))}
       </Feed>
