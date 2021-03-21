@@ -77,10 +77,7 @@ export const getBlogPost: GetBlogPost = async (locale, slug) => {
       description,
       date,
       coverImage,
-      content[] {
-        ...,
-        'asset': asset->
-      },
+      content,
       'author': author-> {
         name,
         avatar

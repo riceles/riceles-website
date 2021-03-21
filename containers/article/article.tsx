@@ -29,12 +29,13 @@ export default function Article({ title, description, date, author, coverImage, 
           </time>
         </div>
         <div className={styles.authorSnippet}>
-          <img src={urlFor(author.avatar).width(40).url()} alt={author.name}/>
-          <span>{author.name}</span>
+          <img src={urlFor(author?.avatar).width(40).url()} alt={author?.name}/>
+          <span>{author?.name}</span>
         </div>
-        <div className={styles.coverImage}>
-          <img src={urlFor(coverImage).width(720).url()} alt={title}/>
-        </div>
+        <figure className={styles.coverImage}>
+          <img src={urlFor(coverImage?.asset).width(720).url()} alt={title}/>
+          <figcaption>{coverImage?.caption}</figcaption>
+        </figure>
         <BlockContent className={styles.blockContent} blocks={content} serializers={serializers}/>
       </div>
     </article>
