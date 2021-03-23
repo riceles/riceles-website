@@ -21,9 +21,11 @@ const localeOptions = [
   }
 ]
 
-export default function Header() {
-  const { locale } = useRouter()
+export interface HeaderProps {
+  locale: string
+}
 
+export default function Header({ locale }: HeaderProps) {
   return (
     <header className={styles.container}>
       <div className={styles.limiter}>

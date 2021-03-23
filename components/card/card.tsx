@@ -1,9 +1,24 @@
 import { parseISO, format } from 'date-fns'
 import ptBR from 'date-fns/locale/pt-BR'
+import enUS from 'date-fns/locale/en-US'
+import esES from 'date-fns/locale/es'
 import Link from 'next/link'
+import t from '../../utils/translations'
 import styles from './card.module.scss'
 
+function getLocaleObj(locale: string) {
+  switch (locale) {
+    case 'en-US':
+      return enUS
+    case 'es-ES':
+      return esES
+    default:
+      return ptBR
+  }
+}
+
 export interface CardProps {
+  locale: string
   slug: string
   coverImageUrl: string
   date: string
@@ -11,7 +26,7 @@ export interface CardProps {
   description: string
 }
 
-export default function Card({ slug, coverImageUrl, date, title, description }: CardProps) {
+export default function Card({ locale, slug, coverImageUrl, date, title, description }: CardProps) {
   const parsedDate = parseISO(date)
 
   return (
@@ -21,12 +36,12 @@ export default function Card({ slug, coverImageUrl, date, title, description }: 
       </div>
       <div className={styles.body}>
         <time dateTime={date}>
-          {format(parsedDate, `d 'de' LLLL 'de' yyyy`, { locale: ptBR })}
+          {format(parsedDate, t[locale].card.dateFormat, { locale: getLocaleObj(locale) })}
         </time>
         <h2>{title}</h2>
         <p>{description}</p>
         <Link href={`/blog/${slug}`}>
-          <button>Ler mais</button>
+          <button>{t[locale].card.buttonText}</button>
         </Link>
       </div>
     </div>

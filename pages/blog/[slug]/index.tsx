@@ -14,16 +14,18 @@ export const getServerSideProps: GetServerSideProps = async ({ locale, params })
 
   return {
     props: {
+      locale,
       blogPost
     }
   }
 }
 
 export interface PostProps {
+  locale: string
   blogPost: BlogPost
 }
 
-export default function Post({ blogPost }: PostProps) {
+export default function Post({ locale, blogPost }: PostProps) {
   let content: ReactNode
   if (blogPost) {
     content = (
@@ -46,7 +48,7 @@ export default function Post({ blogPost }: PostProps) {
   }
 
   return (
-    <Layout>
+    <Layout locale={locale}>
       {content}
     </Layout>
   )
