@@ -43,6 +43,7 @@ export interface Author {
 }
 
 export interface BlogPost {
+  locale?: string
   slug?: string
   title?: string
   description?: string
@@ -50,6 +51,19 @@ export interface BlogPost {
   coverImage?: ImageReference
   content?: Reference[]
   author?: Author
+}
+
+export type GetBlogPostPaths = () => Promise<BlogPost[]>
+
+export const getBlogPostPaths: GetBlogPostPaths = async () => {
+  const blogPostPaths = await client.fetch(`
+    *[_type == 'post'] {
+      locale,
+      'slug': slug.current
+    }
+  `)
+
+  return blogPostPaths
 }
 
 export type GetBlogPostsByPage = (locale: string) => Promise<BlogPost[]>
