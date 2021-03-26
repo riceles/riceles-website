@@ -1,8 +1,6 @@
-import { ReactNode } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Layout from '../../../containers/layout'
 import Article from '../../../containers/article'
-import Message from '../../../containers/message'
 import { getBlogPostPaths, getBlogPost, BlogPost } from '../../../utils/sanity'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -25,6 +23,12 @@ export const getStaticProps: GetStaticProps = async ({ locale, params }) => {
   }
   const blogPost = await getBlogPost(locale, slug)
 
+  if (!blogPost) {
+    return {
+      notFound: true
+    }
+  }
+
   return {
     props: {
       locale,
@@ -39,9 +43,8 @@ export interface PostProps {
 }
 
 export default function Post({ locale, blogPost }: PostProps) {
-  let content: ReactNode
-  if (blogPost) {
-    content = (
+  return (
+    <Layout locale={locale}>
       <Article
         title={blogPost?.title}
         description={blogPost?.description}
@@ -50,19 +53,6 @@ export default function Post({ locale, blogPost }: PostProps) {
         coverImage={blogPost?.coverImage}
         content={blogPost?.content}
       />
-    )
-  } else {
-    content = (
-      <Message
-        title='Postagem não encontrada'
-        description='Não conseguimos encontrar a postagem a qual você tentou acessar'
-      />
-    )
-  }
-
-  return (
-    <Layout locale={locale}>
-      {content}
     </Layout>
   )
 }
