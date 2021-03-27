@@ -1,22 +1,30 @@
-import { parseISO, format } from 'date-fns'
-import ptBR from 'date-fns/locale/pt-BR'
-import { urlFor } from '../../utils/sanity'
+import Link from 'next/link'
+import FormattedDate from '../formatted-date'
+import t from '../../utils/translations'
 import styles from './card.module.scss'
 
-export default function Card({ coverImage, date, title, description }) {
-  const parsedDate = parseISO(date)
+export interface CardProps {
+  locale: string
+  slug: string
+  coverImageUrl: string
+  date: string
+  title: string
+  description: string
+}
 
+export default function Card({ locale, slug, coverImageUrl, date, title, description }: CardProps) {
   return (
     <div className={styles.component}>
       <div className={styles.thumbnail}>
-        <img src={urlFor(coverImage).width(480).url()} alt={title}/>
+        <img src={coverImageUrl} alt={title}/>
       </div>
       <div className={styles.body}>
-        <time dateTime={date}>
-          {format(parsedDate, `d 'de' LLLL 'de' yyyy`, { locale: ptBR })}
-        </time>
+        <FormattedDate locale={locale}>{date}</FormattedDate>
         <h2>{title}</h2>
         <p>{description}</p>
+        <Link href={`/blog/${slug}`}>
+          <button>{t[locale].card.buttonText}</button>
+        </Link>
       </div>
     </div>
   )

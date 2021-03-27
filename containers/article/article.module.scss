@@ -45,8 +45,19 @@
 }
 
 .coverImage {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
   img {
     width: 100%;
+    max-width: 720px;
+  }
+  figcaption {
+    width: 100%;
+    max-width: 720px;
+    font-size: 14px;
+    font-style: italic;
+    text-align: center;
   }
 }
 

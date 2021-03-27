@@ -1,48 +1,58 @@
+import { ReactNode } from 'react'
 import { GetServerSideProps } from 'next'
-import Link from 'next/link'
 import Layout from '../../containers/layout'
-import GridList from '../../containers/grid-list'
+import Feed from '../../containers/feed'
 import Card from '../../components/card'
-import { getBlogPostsByPage } from '../../utils/sanity'
+import Message from '../../containers/message'
+import { getBlogPostsByPage, BlogPost, urlFor } from '../../utils/sanity'
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const blogPosts = await getBlogPostsByPage(locale)
 
   return {
     props: {
+      locale,
       blogPosts
     }
   }
 }
 
-export default function Blog({ blogPosts }) {
-  let blogPostList: any
+export interface BlogProps {
+  locale: string
+  blogPosts: BlogPost[]
+}
+
+export default function Blog({ locale, blogPosts }: BlogProps) {
+  let content: ReactNode
   if (blogPosts && blogPosts.length) {
-    blogPostList = (
-      <GridList>
-        {blogPosts.map(({ slug, title, description, date, coverImage }) => (
-          <li key={title}>
-            <Link href={`/blog/${slug}`}>
-              <a>
-                <Card
-                  coverImage={coverImage}
-                  date={date}
-                  title={title}
-                  description={description}
-                />
-              </a>
-            </Link>
+    content = (
+      <Feed>
+        {blogPosts.map(blogPost => (
+          <li key={blogPost?.title}>
+            <Card
+              locale={locale}
+              slug={blogPost?.slug}
+              coverImageUrl={urlFor(blogPost?.coverImage?.asset).width(480).url()}
+              date={blogPost?.date}
+              title={blogPost?.title}
+              description={blogPost?.description}
+            />
           </li>
         ))}
-      </GridList>
+      </Feed>
     )
   } else {
-    blogPostList = <p>Não há postagens</p>
+    content = (
+      <Message
+        title='Postagens não encontradas'
+        description='Não conseguimos encontrar nenhuma postagem para a sua língua'
+      />
+    )
   }
 
   return (
-    <Layout>
-      {blogPostList}
+    <Layout locale={locale}>
+      {content}
     </Layout>
   )
 }

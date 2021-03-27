@@ -18,16 +18,31 @@
   time {
     font-size: 14px;
     text-align: center;
-    color: #000000;
   }
   h2 {
     font-size: 18px;
     text-align: center;
-    color: #000000;
   }
   p {
     font-size: 16px;
     text-align: justify;
-    color: #000000;
+  }
+  button {
+    padding: 12px;
+    background: #8d8d8d;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 250ms ease;
+    &:hover {
+      background: #6d6d6d;
+    }
+    &:focus {
+      box-shadow: 0px 0px 0px 4px #b8b8b8;
+    }
   }
 }

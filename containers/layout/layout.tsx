@@ -1,10 +1,16 @@
+import { ReactNode } from 'react'
 import Header from '../header'
 import Footer from '../footer'
 
-export default function Layout({ children }) {
+export interface LayoutProps {
+  locale: string
+  children: ReactNode
+}
+
+export default function Layout({ locale, children }: LayoutProps) {
   return (
     <>
-      <Header/>
+      <Header locale={locale}/>
       <main>
         {children}
       </main>
