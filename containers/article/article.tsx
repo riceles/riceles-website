@@ -1,7 +1,6 @@
-import { parseISO, format } from 'date-fns'
-import ptBR from 'date-fns/locale/pt-BR'
 import BlockContent from '@sanity/block-content-to-react'
-import { urlFor } from '../../utils/sanity'
+import FormattedDate from '../../components/formatted-date'
+import { urlFor, ContentItem } from '../../utils/sanity'
 import styles from './article.module.scss'
 
 const serializers = {
@@ -15,26 +14,44 @@ const serializers = {
   }
 }
 
-export default function Article({ title, description, date, author, coverImage, content }) {
-  const parsedDate = parseISO(date)
+export interface ArticleProps {
+  locale: string
+  title: string
+  description: string
+  date: string
+  authorName: string
+  authorAvatarUrl: string
+  coverImageUrl: string
+  coverImageCaption: string
+  content: ContentItem[]
+}
 
+export default function Article({
+  locale,
+  title,
+  description,
+  date,
+  authorName,
+  authorAvatarUrl,
+  coverImageUrl,
+  coverImageCaption,
+  content
+}: ArticleProps) {
   return (
     <article className={styles.container}>
       <div className={styles.limiter}>
         <div className={styles.headline}>
           <h1>{title}</h1>
           <p>{description}</p>
-          <time dateTime={date}>
-            {format(parsedDate, `d 'de' LLLL 'de' yyyy`, { locale: ptBR })}
-          </time>
+          <FormattedDate locale={locale}>{date}</FormattedDate>
         </div>
         <div className={styles.authorSnippet}>
-          <img src={urlFor(author?.avatar).width(40).url()} alt={author?.name}/>
-          <span>{author?.name}</span>
+          <img src={authorAvatarUrl} alt={authorName}/>
+          <span>{authorName}</span>
         </div>
         <figure className={styles.coverImage}>
-          <img src={urlFor(coverImage?.asset).width(720).url()} alt={title}/>
-          <figcaption>{coverImage?.caption}</figcaption>
+          <img src={coverImageUrl} alt={title}/>
+          <figcaption>{coverImageCaption}</figcaption>
         </figure>
         <BlockContent className={styles.blockContent} blocks={content} serializers={serializers}/>
       </div>

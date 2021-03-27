@@ -23,19 +23,18 @@ export interface BlockReference {
   }[]
 }
 
-export interface ImageReference {
-  _type: 'image'
-  asset: {
-    _type: 'reference'
-    _ref: string
-  }
+export interface Asset {
+  _type: 'reference'
+  _ref: string
 }
 
-export interface ImageReferenceWithCaption extends ImageReference {
+export interface ImageReference {
+  _type: 'image'
+  asset: Asset
   caption: string
 }
 
-export type Reference = BlockReference | ImageReferenceWithCaption
+export type ContentItem = BlockReference | ImageReference
 
 export interface Author {
   name?: string
@@ -49,7 +48,7 @@ export interface BlogPost {
   description?: string
   date?: string
   coverImage?: ImageReference
-  content?: Reference[]
+  content?: ContentItem[]
   author?: Author
 }
 
@@ -105,6 +104,6 @@ export const getBlogPost: GetBlogPost = async (locale, slug) => {
 
 const builder = imageUrlBuilder(client)
 
-export const urlFor = (src: ImageReference) => {
+export const urlFor = (src: Asset) => {
   return builder.image(src)
 }

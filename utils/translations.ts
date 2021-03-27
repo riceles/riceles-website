@@ -1,20 +1,26 @@
 export default {
   'pt-BR': {
     card: {
-      buttonText: 'Ler mais',
-      dateFormat: `d 'de' MMMM 'de' yyyy`
+      buttonText: 'Ler mais'
+    },
+    formattedDate: {
+      format: `d 'de' MMMM 'de' yyyy`
     }
   },
   'en-US': {
     card: {
-      buttonText: 'Read more',
-      dateFormat: `MMMM d',' yyyy`
+      buttonText: 'Read more'
+    },
+    formattedDate: {
+      format: `MMMM d',' yyyy`
     }
   },
   'es-ES': {
     card: {
-      buttonText: 'Leer más',
-      dateFormat: `d 'de' MMMM 'de' yyyy`
+      buttonText: 'Leer más'
+    },
+    formattedDate: {
+      format: `d 'de' MMMM 'de' yyyy`
     }
   }
 }

@@ -23,7 +23,6 @@ export interface BlogProps {
 }
 
 export default function Blog({ locale, blogPosts }: BlogProps) {
-  
   let content: ReactNode
   if (blogPosts && blogPosts.length) {
     content = (
@@ -33,7 +32,7 @@ export default function Blog({ locale, blogPosts }: BlogProps) {
             <Card
               locale={locale}
               slug={blogPost?.slug}
-              coverImageUrl={urlFor(blogPost?.coverImage).width(480).url()}
+              coverImageUrl={urlFor(blogPost?.coverImage?.asset).width(480).url()}
               date={blogPost?.date}
               title={blogPost?.title}
               description={blogPost?.description}
