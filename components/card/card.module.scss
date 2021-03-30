@@ -20,8 +20,13 @@
     text-align: center;
   }
   h2 {
+    display: -webkit-box;
     font-size: 18px;
     text-align: center;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   p {
     display: -webkit-box;
