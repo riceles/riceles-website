@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Logo from '../../icons/logo'
 import BrazilFlag from '../../icons/brazil-flag'

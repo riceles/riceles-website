@@ -20,12 +20,23 @@
     text-align: center;
   }
   h2 {
+    display: -webkit-box;
     font-size: 18px;
     text-align: center;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   p {
-    font-size: 16px;
+    display: -webkit-box;
+    font-size: 14px;
     text-align: justify;
+    line-height: 1.5;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   button {
     padding: 12px;
