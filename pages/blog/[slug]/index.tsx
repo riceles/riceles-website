@@ -1,6 +1,6 @@
-import { ReactNode } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 import Layout from '../../../containers/layout'
 import Article from '../../../containers/article'
 import Message from '../../../containers/message'
@@ -46,10 +46,28 @@ export default function Post({ locale, blogPost }: PostProps) {
   if (isFallback) {
     return <Fallback/>
   }
+
+  if (!blogPost) {
+    return (
+      <Layout locale={locale}>
+        <Message
+          title='Postagem não encontrada'
+          description='Não conseguimos encontrar a postagem selecionada'
+        />
+      </Layout>
+    )
+  }
   
-  let content: ReactNode
-  if (blogPost) {
-    content = (
+  return (
+    <Layout locale={locale}>
+      <Head>
+        <title>{blogPost?.title} | Riceles Costa</title>
+        <meta name='description' content={blogPost?.description}/>
+        <meta name='twitter:card' content='summary_large_image'/>
+        <meta name='twitter:title' content={blogPost?.title}/>
+        <meta name='twitter:description' content={blogPost?.description}/>
+        <meta name='twitter:image' content={urlFor(blogPost?.coverImage?.asset).width(720).url()}/>
+      </Head>
       <Article
         locale={locale}
         title={blogPost?.title}
@@ -61,19 +79,6 @@ export default function Post({ locale, blogPost }: PostProps) {
         coverImageCaption={blogPost?.coverImage?.caption}
         content={blogPost?.content}
       />
-    )
-  } else {
-    content = (
-      <Message
-        title='Postagem não encontrada'
-        description='Não conseguimos encontrar a postagem selecionada'
-      />
-    )
-  }
-
-  return (
-    <Layout locale={locale}>
-      {content}
     </Layout>
   )
 }
