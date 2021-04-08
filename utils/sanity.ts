@@ -87,6 +87,7 @@ export type GetBlogPost = (locale: string, slug: string) => Promise<BlogPost>
 export const getBlogPost: GetBlogPost = async (locale, slug) => {
   const blogPost = await client.fetch(`
     *[_type == 'post' && locale == $locale && slug.current == $slug] {
+      'slug': slug.current,
       title,
       description,
       date,
