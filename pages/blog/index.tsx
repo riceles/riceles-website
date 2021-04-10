@@ -1,10 +1,10 @@
-import { ReactNode } from 'react'
 import { GetServerSideProps } from 'next'
 import Layout from '../../containers/layout'
 import Feed from '../../containers/feed'
 import Card from '../../components/card'
 import Message from '../../containers/message'
-import { getBlogPostsByPage, BlogPost, urlFor } from '../../utils/sanity'
+import { getBlogPostsByPage, urlFor } from '../../cms/functions'
+import { BlogPost } from '../../cms/types'
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   const blogPosts = await getBlogPostsByPage(locale)
@@ -23,9 +23,19 @@ export interface BlogProps {
 }
 
 export default function Blog({ locale, blogPosts }: BlogProps) {
-  let content: ReactNode
-  if (blogPosts && blogPosts.length) {
-    content = (
+  if (!blogPosts || !blogPosts.length) {
+    return (
+      <Layout locale={locale}>
+        <Message
+          title='Postagens não encontradas'
+          description='Não conseguimos encontrar nenhuma postagem para a sua língua'
+        />
+      </Layout>
+    )
+  }
+
+  return (
+    <Layout locale={locale}>
       <Feed>
         {blogPosts.map(blogPost => (
           <li key={blogPost?.title}>
@@ -40,19 +50,6 @@ export default function Blog({ locale, blogPosts }: BlogProps) {
           </li>
         ))}
       </Feed>
-    )
-  } else {
-    content = (
-      <Message
-        title='Postagens não encontradas'
-        description='Não conseguimos encontrar nenhuma postagem para a sua língua'
-      />
-    )
-  }
-
-  return (
-    <Layout locale={locale}>
-      {content}
     </Layout>
   )
 }
