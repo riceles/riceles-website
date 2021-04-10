@@ -1,9 +1,11 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { Article as ArticleSchema } from 'schema-dts'
+import { jsonLdScriptProps } from 'react-schemaorg'
 import Layout from '../../../containers/layout'
-import Article from '../../../containers/article'
 import Message from '../../../containers/message'
+import Article from '../../../containers/article'
 import Fallback from '../../../containers/fallback'
 import { getBlogPostPaths, getBlogPost, urlFor } from '../../../cms/functions'
 import { BlogPost } from '../../../cms/types'
@@ -85,6 +87,22 @@ export default function Post({ locale, blogPost }: PostProps) {
         <meta name='twitter:title' content={blogPost?.title}/>
         <meta name='twitter:description' content={blogPost?.description}/>
         <meta name='twitter:image' content={urlFor(blogPost?.coverImage?.asset).width(720).url()}/>
+
+        {/* Structured Data */}
+        <script
+          {...jsonLdScriptProps<ArticleSchema>({
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: blogPost?.title,
+            datePublished: blogPost?.date,
+            image: urlFor(blogPost?.coverImage?.asset).width(720).url(),
+            author: {
+              '@type': 'Person',
+              name: blogPost?.author?.name,
+              image: urlFor(blogPost?.author?.avatar?.asset).width(400).url()
+            }
+          })}
+        />
       </Head>
       <Article
         locale={locale}

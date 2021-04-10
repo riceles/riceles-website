@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next'
 import Layout from '../../containers/layout'
+import Message from '../../containers/message'
 import Feed from '../../containers/feed'
 import Card from '../../components/card'
-import Message from '../../containers/message'
 import { getBlogPostsByPage, urlFor } from '../../cms/functions'
 import { BlogPost } from '../../cms/types'
 
