@@ -1,11 +1,14 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { Article as ArticleSchema } from 'schema-dts'
+import { jsonLdScriptProps } from 'react-schemaorg'
 import Layout from '../../../containers/layout'
-import Article from '../../../containers/article'
 import Message from '../../../containers/message'
+import Article from '../../../containers/article'
 import Fallback from '../../../containers/fallback'
-import { getBlogPostPaths, getBlogPost, urlFor, BlogPost } from '../../../utils/sanity'
+import { getBlogPostPaths, getBlogPost, urlFor } from '../../../cms/functions'
+import { BlogPost } from '../../../cms/types'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const blogPostPaths = await getBlogPostPaths()
@@ -61,12 +64,45 @@ export default function Post({ locale, blogPost }: PostProps) {
   return (
     <Layout locale={locale}>
       <Head>
+        {/* Basic Meta Tags */}
         <title>{blogPost?.title} | Riceles Costa</title>
         <meta name='description' content={blogPost?.description}/>
+
+        {/* Open Graph Tags */}
+        <meta property='og:title' content={blogPost?.title}/>
+        <meta property='og:description' content={blogPost?.description}/>
+        <meta property='og:image' content={urlFor(blogPost?.coverImage?.asset).width(720).url()}/>
+        <meta property='og:site_name' content='Riceles Costa'/>
+        <meta
+          property='og:url'
+          content={`https://riceles.com${locale !== 'pt-BR' ? `/${locale}` : ''}/blog/${blogPost?.slug}`}
+        />
+        <meta property='og:locale' content={locale.replace('-', '_')}/>
+        <meta property='og:type' content='article'/>
+        <meta property='article:author' content={blogPost?.author?.name}/>
+        <meta property='article:published_time' content={blogPost?.date}/>
+
+        {/* Twitter Card Tags */}
         <meta name='twitter:card' content='summary_large_image'/>
         <meta name='twitter:title' content={blogPost?.title}/>
         <meta name='twitter:description' content={blogPost?.description}/>
         <meta name='twitter:image' content={urlFor(blogPost?.coverImage?.asset).width(720).url()}/>
+
+        {/* Structured Data */}
+        <script
+          {...jsonLdScriptProps<ArticleSchema>({
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: blogPost?.title,
+            datePublished: blogPost?.date,
+            image: urlFor(blogPost?.coverImage?.asset).width(720).url(),
+            author: {
+              '@type': 'Person',
+              name: blogPost?.author?.name,
+              image: urlFor(blogPost?.author?.avatar?.asset).width(400).url()
+            }
+          })}
+        />
       </Head>
       <Article
         locale={locale}
