@@ -95,11 +95,25 @@ export default function Post({ locale, blogPost }: PostProps) {
             '@type': 'Article',
             headline: blogPost?.title,
             datePublished: blogPost?.date,
-            image: urlFor(blogPost?.coverImage?.asset).width(720).url(),
+            image: {
+              '@type': 'ImageObject',
+              url: urlFor(blogPost?.coverImage?.asset).width(720).url()
+            },
             author: {
               '@type': 'Person',
               name: blogPost?.author?.name,
-              image: urlFor(blogPost?.author?.avatar?.asset).width(400).url()
+              image: {
+                '@type': 'ImageObject',
+                url: urlFor(blogPost?.author?.avatar?.asset).width(400).url()
+              }
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Riceles Costa',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://riceles.com/imgs/logo.svg'
+              }
             }
           })}
         />

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Logo from '../../icons/logo'
+import Image from 'next/image'
 import BrazilFlag from '../../icons/brazil-flag'
 import UsaFlag from '../../icons/usa-flag'
 import SpainFlag from '../../icons/spain-flag'
@@ -31,7 +31,7 @@ export default function Header({ locale }: HeaderProps) {
         <div className={styles.logo}>
           <Link href='/'>
             <a>
-              <Logo/>
+              <Image src='/imgs/logo.svg' alt='Logo' width={360} height={40}/>
             </a>
           </Link>
         </div>
