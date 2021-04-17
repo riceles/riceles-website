@@ -1,7 +1,8 @@
 import imageUrlBuilder from '@sanity/image-url'
 import client from './client'
-import { blogPostPathsQuery, blogPostsByPageQuery, blogPostQuery } from './queries'
+import { blogPostPathsQuery, blogPostSlugsByLocaleQuery, blogPostsByPageQuery, blogPostQuery } from './queries'
 import { Asset, ImageReference, BlogPost } from './types'
+import { BLOG_POSTS_PER_PAGE } from '../utils/constants'
 
 export type GetBlogPostPaths = () => Promise<BlogPost[]>
 
@@ -11,10 +12,20 @@ export const getBlogPostPaths: GetBlogPostPaths = async () => {
   return blogPostPaths
 }
 
-export type GetBlogPostsByPage = (locale: string) => Promise<BlogPost[]>
+export type GetBlogPostSlugsByLocale = (locale: string) => Promise<BlogPost[]>
 
-export const getBlogPostsByPage: GetBlogPostsByPage = async (locale) => {
-  const blogPosts = await client.fetch(blogPostsByPageQuery, { locale })
+export const getBlogPostSlugsByLocale: GetBlogPostSlugsByLocale = async (locale) => {
+  const blogPostSlugsByLocale = await client.fetch(blogPostSlugsByLocaleQuery, { locale })
+
+  return blogPostSlugsByLocale
+}
+
+export type GetBlogPostsByPage = (locale: string, page: number) => Promise<BlogPost[]>
+
+export const getBlogPostsByPage: GetBlogPostsByPage = async (locale, page) => {
+  const start = (page - 1) * BLOG_POSTS_PER_PAGE
+  const end = page * BLOG_POSTS_PER_PAGE
+  const blogPosts = await client.fetch(blogPostsByPageQuery, { locale, start, end })
 
   return blogPosts
 }

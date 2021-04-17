@@ -7,8 +7,14 @@ export const blogPostPathsQuery = groq`
   }
 `
 
+export const blogPostSlugsByLocaleQuery = groq`
+  *[_type == 'post' && locale == $locale] {
+    'slug': slug.current
+  }
+`
+
 export const blogPostsByPageQuery =  groq`
-  *[_type == 'post' && locale == $locale] | order(date desc) {
+  *[_type == 'post' && locale == $locale] | order(date desc, title asc) [$start...$end] {
     'slug': slug.current,
     title,
     description,

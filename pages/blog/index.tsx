@@ -4,7 +4,7 @@ import Message from '../../containers/message'
 import Feed from '../../containers/feed'
 import Pagination from '../../containers/pagination'
 import Card from '../../components/card'
-import { getBlogPostsByPage, getBlogPostPaths, urlFor } from '../../cms/functions'
+import { getBlogPostsByPage, getBlogPostSlugsByLocale, urlFor } from '../../cms/functions'
 import { BlogPost } from '../../cms/types'
 import { BLOG_POSTS_PER_PAGE } from '../../utils/constants'
 
@@ -13,9 +13,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query, locale }) 
   if (page instanceof Array) {
     page = page[0]
   }
-  const blogPosts = await getBlogPostsByPage(locale)
-  const blogPostPaths = await getBlogPostPaths()
-  const numOfPages = Math.ceil(blogPostPaths.length / BLOG_POSTS_PER_PAGE)
+  const blogPosts = await getBlogPostsByPage(locale, parseInt(page))
+  const blogPostSlugsByLocale = await getBlogPostSlugsByLocale(locale)
+  const numOfPages = Math.ceil(blogPostSlugsByLocale.length / BLOG_POSTS_PER_PAGE)
 
   return {
     props: {
