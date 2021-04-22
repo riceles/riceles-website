@@ -13,15 +13,16 @@ export const getServerSideProps: GetServerSideProps = async ({ query, locale }) 
   if (page instanceof Array) {
     page = page[0]
   }
-  const blogPosts = await getBlogPostsByPage(locale, parseInt(page))
+  const curPage = +page
+  const blogPostsByPage = await getBlogPostsByPage(locale, curPage)
   const blogPostSlugsByLocale = await getBlogPostSlugsByLocale(locale)
   const numOfPages = Math.ceil(blogPostSlugsByLocale.length / BLOG_POSTS_PER_PAGE)
 
   return {
     props: {
       locale,
-      blogPosts,
-      page,
+      blogPostsByPage,
+      curPage,
       numOfPages
     }
   }
@@ -29,13 +30,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query, locale }) 
 
 export interface BlogProps {
   locale: string
-  blogPosts: BlogPost[]
-  page: string
+  blogPostsByPage: BlogPost[]
+  curPage: number
   numOfPages: number
 }
 
-export default function Blog({ locale, blogPosts, page, numOfPages }: BlogProps) {
-  if (!blogPosts || !blogPosts.length) {
+export default function Blog({ locale, blogPostsByPage, curPage, numOfPages }: BlogProps) {
+  if (!blogPostsByPage || !blogPostsByPage.length) {
     return (
       <Layout locale={locale}>
         <Message
@@ -49,7 +50,7 @@ export default function Blog({ locale, blogPosts, page, numOfPages }: BlogProps)
   return (
     <Layout locale={locale}>
       <Feed>
-        {blogPosts.map(blogPost => (
+        {blogPostsByPage.map(blogPost => (
           <li key={blogPost?.title}>
             <Card
               locale={locale}
@@ -62,7 +63,7 @@ export default function Blog({ locale, blogPosts, page, numOfPages }: BlogProps)
           </li>
         ))}
       </Feed>
-      <Pagination curPage={parseInt(page)} numOfPages={numOfPages}/>
+      <Pagination curPage={curPage} numOfPages={numOfPages}/>
     </Layout>
   )
 }
