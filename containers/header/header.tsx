@@ -40,7 +40,7 @@ export default function Header({ locale }: HeaderProps) {
             <li>
               <Link href={{
                 pathname: '/blog',
-                query: { page: '1' }
+                query: { page: 1 }
               }}>
                 <a>Blog</a>
               </Link>

@@ -22,7 +22,7 @@ export const getBlogPostSlugsByLocale: GetBlogPostSlugsByLocale = async (locale)
 
 export type GetBlogPostsByPage = (locale: string, page: number) => Promise<BlogPost[]>
 
-export const getBlogPostsByPage: GetBlogPostsByPage = async (locale, page) => {
+export const getBlogPostsByPage: GetBlogPostsByPage = async (locale, page = 1) => {
   const start = (page - 1) * BLOG_POSTS_PER_PAGE
   const end = page * BLOG_POSTS_PER_PAGE
   const blogPosts = await client.fetch(blogPostsByPageQuery, { locale, start, end })
