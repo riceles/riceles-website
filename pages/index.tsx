@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next'
 import Layout from '../containers/layout'
+import Slider from '../containers/slider'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
@@ -16,7 +17,7 @@ export interface HomeProps {
 export default function Home({ locale }: HomeProps) {
   return (
     <Layout locale={locale}>
-      <p>Conteúdo da página "home"</p>
+      <Slider/>
     </Layout>
   )
 }
